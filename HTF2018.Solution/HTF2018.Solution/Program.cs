@@ -74,6 +74,10 @@ namespace HTF2018.Solution
                                 Console.WriteLine();
                                 Console.WriteLine("EXAMPLE");
                                 Console.WriteLine();
+                                foreach (var inputValue in challengeResponse.Data.Example.Question.InputValues)
+                                {
+                                    Console.WriteLine($"INPUTVALUE: {inputValue.Name} - {inputValue.Data}");
+                                }
                                 foreach (var value in challengeResponse.Data.Example.Answer.Values)
                                 {
                                     Console.WriteLine($"INPUTVALUE: {value.Name} - {value.Data}");
