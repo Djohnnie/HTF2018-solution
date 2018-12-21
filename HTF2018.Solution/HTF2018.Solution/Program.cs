@@ -44,9 +44,12 @@ namespace HTF2018.Solution
 
                     if (postResponse.IsSuccessful)
                     {
+                        Console.WriteLine($"{postResponse.Data.Identifier} - {postResponse.Data.Status}");
+
                         var identification = postResponse.Data.Identification;
                         for (int i = 2; i < 20; i++)
                         {
+                            await Task.Delay(1500);
                             var overviewType = typeof(Overview);
                             var challengePropertyName = $"Challenge{i:D2}";
                             var challengePropertyInfo = overviewType.GetProperty(challengePropertyName);
@@ -59,6 +62,24 @@ namespace HTF2018.Solution
                             var challengeResponse = await client.ExecuteTaskAsync<Challenge>(challengeRequest);
                             if (challengeResponse.IsSuccessful)
                             {
+                                Console.WriteLine();
+                                Console.WriteLine($"{challengeResponse.Data.Identifier}");
+                                Console.WriteLine($"{challengeResponse.Data.Description}");
+                                foreach (var inputValue in challengeResponse.Data.Question.InputValues)
+                                {
+                                    Console.WriteLine($"INPUTVALUE: {inputValue.Name} - {inputValue.Data}");
+                                }
+
+                                Console.WriteLine();
+                                Console.WriteLine("EXAMPLE");
+                                Console.WriteLine();
+                                foreach (var value in challengeResponse.Data.Example.Answer.Values)
+                                {
+                                    Console.WriteLine($"INPUTVALUE: {value.Name} - {value.Data}");
+                                }
+
+                                await Task.Delay(1500);
+
                                 var challengeAnswer = new Answer
                                 {
                                     ChallengeId = challengeResponse.Data.Id,
@@ -72,8 +93,12 @@ namespace HTF2018.Solution
                                 var challengePostResponse = await client.ExecuteTaskAsync<Response>(challengePostRequest);
                                 if (challengePostResponse.IsSuccessful)
                                 {
-
+                                    Console.WriteLine($"{challengePostResponse.Data.Identifier} - {challengePostResponse.Data.Status}");
                                 }
+                            }
+                            else
+                            {
+                                Console.WriteLine($"{challengeResponse.Data.Identifier} - ERROR");
                             }
                         }
                     }
