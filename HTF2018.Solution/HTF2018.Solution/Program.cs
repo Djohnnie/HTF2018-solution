@@ -80,7 +80,7 @@ namespace HTF2018.Solution
                                 }
                                 foreach (var value in challengeResponse.Data.Example.Answer.Values)
                                 {
-                                    Console.WriteLine($"INPUTVALUE: {value.Name} - {value.Data}");
+                                    Console.WriteLine($"OUTPUTVALUE: {value.Name} - {value.Data}");
                                 }
 
                                 await Task.Delay(1500);
