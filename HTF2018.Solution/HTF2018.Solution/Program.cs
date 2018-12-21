@@ -1,4 +1,7 @@
 ﻿using System;
+using RestSharp;
+using System.Threading.Tasks;
+using HTF2018.Solution.Model;
 
 namespace HTF2018.Solution
 {
@@ -6,7 +9,21 @@ namespace HTF2018.Solution
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            MainAsync().GetAwaiter().GetResult();
+            Console.ReadKey();
+        }
+
+        static async Task MainAsync()
+        {
+            var client = new RestClient("http://htf2018.azurewebsites.net");
+            var request = new RestRequest("challenges", Method.GET);
+
+            var response = await client.ExecuteTaskAsync<Challenge>(request);
+
+            if (response.IsSuccessful)
+            {
+                Console.WriteLine(response.Data);
+            }
         }
     }
 }
