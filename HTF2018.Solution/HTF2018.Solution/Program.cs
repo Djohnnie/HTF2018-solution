@@ -19,6 +19,7 @@ namespace HTF2018.Solution
 
         static async Task MainAsync()
         {
+            Console.ForegroundColor = ConsoleColor.White;
             var client = new RestClient("http://htf2018.azurewebsites.net");
             var request = new RestRequest("challenges", Method.GET);
 
@@ -93,7 +94,24 @@ namespace HTF2018.Solution
                                 var challengePostResponse = await client.ExecuteTaskAsync<Response>(challengePostRequest);
                                 if (challengePostResponse.IsSuccessful)
                                 {
-                                    Console.WriteLine($"{challengePostResponse.Data.Identifier} - {challengePostResponse.Data.Status}");
+                                    if (challengePostResponse.Data.Status == Status.Successful)
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Green;
+                                        Console.WriteLine($"{challengePostResponse.Data.Identifier} - {challengePostResponse.Data.Status}");
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                    }
+                                    else
+                                    {
+                                        Console.ForegroundColor = ConsoleColor.Red;
+                                        Console.WriteLine($"{challengePostResponse.Data.Identifier} - {challengePostResponse.Data.Status}");
+                                        Console.ForegroundColor = ConsoleColor.White;
+                                    }
+                                }
+                                else
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine($"{challengeResponse.Data.Identifier} - ERROR");
+                                    Console.ForegroundColor = ConsoleColor.White;
                                 }
                             }
                             else
